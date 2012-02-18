@@ -14,6 +14,10 @@ echo "Info: CACHE_DIR=$CACHE_DIR"
 if [ "$BUILDPACK_GHC_BASE_URL" != "" ]; then
   arch=$(uname -m)
   ghcver=$GHC_BOOTSTRAP_VERSION
+  if [ "$ghcver" == "" ]; then
+    echo "Error: please set GHC_BOOTSTRAP_VERSION";
+    exit 1;
+  fi;
   bsdir=$CACHE_DIR/bootstrap
   ghcurl="$BUILDPACK_GHC_BASE_URL/$ghcver/ghc-$ghcver-$arch-unknown-linux.tar.bz2"
   echo "Info: bootstrap directory: ${bsdir}";
