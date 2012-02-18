@@ -1,0 +1,11 @@
+rvm use 1.9.2@cabal-heroku-buildpack
+BUILDPACK_GHC_BASE_URL="http://www.haskell.org/ghc/dist"
+GHC_BOOTSTRAP_VERSION=7.0.4
+
+export GHC_BOOTSTRAP_VERSION BUILDPACK_GHC_BASE_URL
+
+# Aruba envvars
+ARUBA_REPORT_TEMPLATES=templates
+ARUBA_REPORT_DIR=doc
+
+export ARUBA_REPORT_TEMPLATES ARUBA_REPORT_DIR

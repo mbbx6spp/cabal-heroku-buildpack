@@ -1,0 +1,37 @@
+
+function indent() {
+  c='s/^/       /'
+    case $(uname) in
+      Darwin) sed -l "$c";;
+  *)      sed -u "$c";;
+  esac
+}
+
+function clearEnvironment() {
+  unset GIT_DIR
+}
+
+function downloadAndExtract() {
+  mkdir -p $1 && curl $2 -o - | tar jxf - -C $1
+}
+
+function configureMakeInstall() {
+  pushd $1
+  echo -n "Info: configure --prefix=$2"
+  ./configure --prefix=$2;
+  echo "[OK]"
+  echo -n "Info: make"
+  make
+  echo "[OK]";
+  echo -n "Info: make install"
+  make install
+  echo "[OK]"
+  popd
+}
+
+function mkCompilerDir() {
+  local compilerDir=$CACHE_DIR/compilers/$1;
+  [[ ! -d "$compilerDir" ]]; mkdir -p $compilerDir;
+  echo $compilerDir;
+}
+

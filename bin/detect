@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# bin/detect BUILD_DIR
+set -e
+
+BUILD_DIR=$1
+echo $BUILD_DIR
+
+CABAL_FILE="$(find $BUILD_DIR -maxdepth 1 -name '*.cabal' -print -quit)"
+
+# Check a *.cabal file exists at the root of the source tree
+if [[ -e $CABAL_FILE ]]; then
+  echo "GHC/Cabal" && exit 0
+else
+  echo "nada" && exit 1
+fi
