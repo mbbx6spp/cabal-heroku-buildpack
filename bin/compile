@@ -3,7 +3,7 @@
 
 set -e
 
-source scripts/functions
+source ../scripts/functions
 
 BUILD_DIR=$1
 CACHE_DIR=$2
