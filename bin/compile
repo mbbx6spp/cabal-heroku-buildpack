@@ -4,6 +4,7 @@
 set -e
 
 source $(dirname $0)/../scripts/functions
+env
 
 BUILD_DIR=$1
 echo "Info: BUILD_DIR=$BUILD_DIR"
