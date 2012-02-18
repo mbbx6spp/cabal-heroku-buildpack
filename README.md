@@ -26,6 +26,8 @@ Like other buildpacks you will need to specify the buildpack when creating
 your Heroku application. Something like the following:
 
     heroku create --stack cedar --buildpack https://github.com/mbbx6spp/cabal-heroku-buildpack
+    heroku plugins:install http://github.com/heroku/heroku-labs.git
+    heroku labs:enable user_env_compile --app YOUR_APP_NAME
 
 You will also need to specify environment variables after your app is
 created. For instance,
