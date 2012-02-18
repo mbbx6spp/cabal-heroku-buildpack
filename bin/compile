@@ -3,10 +3,12 @@
 
 set -e
 
-source ../scripts/functions
+source $(dirname $0)/../scripts/functions
 
 BUILD_DIR=$1
+echo "Info: BUILD_DIR=$BUILD_DIR"
 CACHE_DIR=$2
+echo "Info: CACHE_DIR=$CACHE_DIR"
 
 ## CHECK BUILDPACK_GHC_BASE_URL is set
 if [ "$BUILDPACK_GHC_BASE_URL" != "" ]; then
