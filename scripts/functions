@@ -16,17 +16,11 @@ function downloadAndExtract() {
 }
 
 function configureMakeInstall() {
-  pushd $1
-  echo -n "Info: configure --prefix=$2"
-  ./configure --prefix=$2;
-  echo "[OK]"
-  echo -n "Info: make"
-  make
+  pushd $1;
+  echo -n "Info: ./configure --prefix=$2 && make && make install";
+  ./configure --prefix=$2 && make && make install;
   echo "[OK]";
-  echo -n "Info: make install"
-  make install
-  echo "[OK]"
-  popd
+  popd;
 }
 
 function mkCompilerDir() {

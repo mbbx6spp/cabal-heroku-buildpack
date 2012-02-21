@@ -4,7 +4,6 @@
 set -e
 
 source $(dirname $0)/../scripts/functions
-env
 
 BUILD_DIR=$1
 echo "Info: BUILD_DIR=$BUILD_DIR"
@@ -13,23 +12,29 @@ echo "Info: CACHE_DIR=$CACHE_DIR"
 
 ## CHECK BUILDPACK_GHC_BASE_URL is set
 if [ "$BUILDPACK_GHC_BASE_URL" != "" ]; then
-  arch=$(uname -m)
-  ghcver=$GHC_BOOTSTRAP_VERSION
+  local arch=$(uname -m)
+  local ghcver=$GHC_BOOTSTRAP_VERSION
   if [ "$ghcver" == "" ]; then
     echo "Error: please set GHC_BOOTSTRAP_VERSION";
     exit 1;
   fi;
-  bsdir=$CACHE_DIR/bootstrap
-  ghcurl="$BUILDPACK_GHC_BASE_URL/$ghcver/ghc-$ghcver-$arch-unknown-linux.tar.bz2"
+  local bsdir=$CACHE_DIR/bootstrap
+  local ghcurl="$BUILDPACK_GHC_BASE_URL/$ghcver/ghc-$ghcver-$arch-unknown-linux.tar.bz2"
   echo "Info: bootstrap directory: ${bsdir}";
   echo "Info: bootstrap URL: $ghcurl";
-  if [ -f "$bsdir.completed" ]; then
+  if [ -f "$bsdir.downloaded" ]; then
     echo "Info: already downloaded GHC bootstrap version ${ghcver}";
   else
     echo "Info: downloading GHC $ghcver form $ghcurl";
     $(downloadAndExtract $bsdir $ghcurl);
+    touch $bsdir.downloaded;
+  fi;
+
+  if [ -f "$bsdir.compiled" ]; then
+    echo "Info: already compiled GHC bootstrap version ${ghcver}";
+  else
     $(configureMakeInstall $bsdir/ghc-$ghcver $BUILD_DIR/bootstrap/ghc-$ghcver);
-    touch $bsdir.completed
+    touch $bsdir.compiled;
   fi;
 else
   echo "Error: please set BUILDPACK_GHC_BASE_URL";
