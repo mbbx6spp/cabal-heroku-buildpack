@@ -3,6 +3,10 @@
 This is a custom Heroku buildpack for Haskell applications that are built
 using GHC and Cabal.
 
+## Status
+
+UNFINISHED! Check back next weekend - 2012-02-21
+
 ## Version / Dependencies
 
 Based on the current (as of this writing) Haskell Platform (2011.4.0.0 ->
@@ -15,10 +19,6 @@ The goal will be to allow some variance of GHC and Platform versions. At
 present there are zero plans to actively support GHC 6.x with this
 buildpack. If it happens to work, then great, otherwise you are free to fork
 this repository to make it work for your needs.
-
-## Status
-
-Experimental; in progress - still testing.
 
 ## Usage
 
