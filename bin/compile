@@ -12,14 +12,14 @@ echo "Info: CACHE_DIR=$CACHE_DIR"
 
 ## CHECK BUILDPACK_GHC_BASE_URL is set
 if [ "$BUILDPACK_GHC_BASE_URL" != "" ]; then
-  local arch=$(uname -m)
-  local ghcver=$GHC_BOOTSTRAP_VERSION
+  arch=$(uname -m)
+  ghcver=$GHC_BOOTSTRAP_VERSION
   if [ "$ghcver" == "" ]; then
     echo "Error: please set GHC_BOOTSTRAP_VERSION";
     exit 1;
   fi;
-  local bsdir=$CACHE_DIR/bootstrap
-  local ghcurl="$BUILDPACK_GHC_BASE_URL/$ghcver/ghc-$ghcver-$arch-unknown-linux.tar.bz2"
+  bsdir=$CACHE_DIR/bootstrap
+  ghcurl="$BUILDPACK_GHC_BASE_URL/$ghcver/ghc-$ghcver-$arch-unknown-linux.tar.bz2"
   echo "Info: bootstrap directory: ${bsdir}";
   echo "Info: bootstrap URL: $ghcurl";
   if [ -f "$bsdir.downloaded" ]; then
