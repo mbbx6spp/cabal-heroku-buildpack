@@ -20,7 +20,7 @@ else
   mkdir -p ${CACHE_DIR}
   pushd ${CACHE_DIR}
   curl -O ${BUILDPACK_GHC_BASE_URL}/${GHC_VERSION}/ghc-heroku-${GHC_VERSION}.tar.bz2;
-  tar -jxf ghc=heroku-${GHC_VERSION}.tar.bz2;
+  tar -jxf ghc-heroku-${GHC_VERSION}.tar.bz2;
   cabal update
   cabal install cabal cabal-install
   popd
