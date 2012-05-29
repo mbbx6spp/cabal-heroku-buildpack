@@ -11,5 +11,6 @@ config_vars:
   GHC_VERSION: 7.4.1
   BUILDPACK_GHC_BASE_URL: "http://www.haskell.org/ghc/dist/"
 addons:
+  heroku-postgresql:dev
 default_process_types:
 EOF
