@@ -8,12 +8,8 @@ cat <<EOF
 config_vars:
   GHC_PACKAGE_PATH: "$BUILD_DIR/ghc-packages.conf:"
   GHCRTS: "-M512m -c70 -H128m"
-  HASKELL_PLATFORM_VERSION: 2011.4.0.0
-  GHC_BOOTSTRAP_VERSION: 7.0.4
-  BUILDPACK_GHC_BASE_URL:
-  BUILDPACK_PLATFORM_BASE_URL:
+  GHC_VERSION: 7.4.1
+  BUILDPACK_GHC_BASE_URL: "http://www.haskell.org/ghc/dist/"
 addons:
-  - shared-database:5mb
 default_process_types:
 EOF
-

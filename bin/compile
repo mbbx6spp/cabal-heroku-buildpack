@@ -10,33 +10,23 @@ echo "Info: BUILD_DIR=$BUILD_DIR"
 CACHE_DIR=$2
 echo "Info: CACHE_DIR=$CACHE_DIR"
 
-## CHECK BUILDPACK_GHC_BASE_URL is set
-if [ "$BUILDPACK_GHC_BASE_URL" != "" ]; then
-  arch=$(uname -m)
-  ghcver=$GHC_BOOTSTRAP_VERSION
-  if [ "$ghcver" == "" ]; then
-    echo "Error: please set GHC_BOOTSTRAP_VERSION";
-    exit 1;
-  fi;
-  bsdir=$CACHE_DIR/bootstrap
-  ghcurl="$BUILDPACK_GHC_BASE_URL/$ghcver/ghc-$ghcver-$arch-unknown-linux.tar.bz2"
-  echo "Info: bootstrap directory: ${bsdir}";
-  echo "Info: bootstrap URL: $ghcurl";
-  if [ -f "$bsdir.downloaded" ]; then
-    echo "Info: already downloaded GHC bootstrap version ${ghcver}";
-  else
-    echo "Info: downloading GHC $ghcver form $ghcurl";
-    $(downloadAndExtract $bsdir $ghcurl);
-    touch $bsdir.downloaded;
-  fi;
+[ -z $GHC_VERSION ] && echo "Error: please set GHC_VERSION in environment" && exit 1
 
-  if [ -f "$bsdir.compiled" ]; then
-    echo "Info: already compiled GHC bootstrap version ${ghcver}";
-  else
-    $(configureMakeInstall $bsdir/ghc-$ghcver $BUILD_DIR/bootstrap/ghc-$ghcver);
-    touch $bsdir.compiled;
-  fi;
-else
+## CHECK BUILDPACK_GHC_BASE_URL is set
+if [ -z ${BUILDPACK_GHC_BASE_URL} ]; then
   echo "Error: please set BUILDPACK_GHC_BASE_URL";
   exit 1;
-fi
+else
+  pushd ${CACHE_DIR}
+  wget ${BUILDPACK_GHC_BASE_URL}/${GHC_VERSION}/ghc-heroku-${GHC_VERSION}.tar.bz2;
+  tar -jxf ghc=heroku-${GHC_VERSION}.tar.bz2;
+  cabal update
+  cabal install cabal cabal-install
+  popd
+
+  PATH=${CACHE_DIR}/ghc/bin:$PATH
+
+  pushd ${BUILD_DIR}
+  cabal install
+  popd
+fi;
