@@ -17,17 +17,17 @@ if [ -z ${BUILDPACK_GHC_BASE_URL} ]; then
   echo "Error: please set BUILDPACK_GHC_BASE_URL";
   exit 1;
 else
-  mkdir -p ${CACHE_DIR}
-  pushd ${CACHE_DIR}
+  mkdir -p ${CACHE_DIR};
+  pushd ${CACHE_DIR};
   curl -O ${BUILDPACK_GHC_BASE_URL}/${GHC_VERSION}/ghc-heroku-${GHC_VERSION}.tar.bz2;
-  tar -jxf ghc-heroku-${GHC_VERSION}.tar.bz2;
-  cabal update
-  cabal install cabal cabal-install
-  popd
+  tar jxvf ghc-heroku-${GHC_VERSION}.tar.bz2;
+  cabal update;
+  cabal install cabal cabal-install;
+  popd;
 
-  PATH=${CACHE_DIR}/ghc/bin:$PATH
+  PATH=${CACHE_DIR}/ghc/bin:$PATH;
 
-  pushd ${BUILD_DIR}
-  cabal install
-  popd
+  pushd ${BUILD_DIR};
+  cabal install;
+  popd;
 fi;
