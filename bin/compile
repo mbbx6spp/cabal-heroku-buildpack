@@ -26,7 +26,6 @@ else
   PATH=${CACHE_DIR}/ghc-${GHC_VERSION}/bin:$PATH;
   export LD_LIBRARY_PATH=${CACHE_DIR}/gmp-5.0.5/lib:${LD_LIBRARY_PATH};
   cabal update;
-  cabal install cabal cabal-install;
   popd;
 
   pushd ${BUILD_DIR};
