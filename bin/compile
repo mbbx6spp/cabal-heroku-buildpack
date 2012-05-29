@@ -23,8 +23,8 @@ else
   echo "Info: Downloading ${URL}"
   curl -O ${URL};
   tar jxf ghc-heroku-${GHC_VERSION}.tar.bz2;
-  PATH=${CACHE_DIR}/ghc/bin:$PATH;
-  export LD_LIBRARY_PATH=${CACHE_DIR}/gmp/lib:${LD_LIBRARY_PATH};
+  PATH=${CACHE_DIR}/ghc-${GHC_VERSION}/bin:$PATH;
+  export LD_LIBRARY_PATH=${CACHE_DIR}/gmp-5.0.5/lib:${LD_LIBRARY_PATH};
   cabal update;
   cabal install cabal cabal-install;
   popd;
