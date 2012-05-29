@@ -22,12 +22,11 @@ else
   URL=${BUILDPACK_GHC_BASE_URL}/ghc-heroku-${GHC_VERSION}.tar.bz2;
   echo "Info: Downloading ${URL}"
   curl -O ${URL};
-  tar jxvf ghc-heroku-${GHC_VERSION}.tar.bz2;
+  tar jxf ghc-heroku-${GHC_VERSION}.tar.bz2;
+  PATH=${CACHE_DIR}/ghc/bin:$PATH;
   cabal update;
   cabal install cabal cabal-install;
   popd;
-
-  PATH=${CACHE_DIR}/ghc/bin:$PATH;
 
   pushd ${BUILD_DIR};
   cabal install;
