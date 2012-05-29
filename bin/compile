@@ -24,8 +24,7 @@ else
   curl -O ${URL};
   tar jxf ghc-heroku-${GHC_VERSION}.tar.bz2;
   PATH=${CACHE_DIR}/ghc/bin:$PATH;
-  LIBRARY_PATH=${CACHE_DIR}/gmp/lib:${LIBRARY_PATH};
-  LD_LIBRARY_PATH=${CACHE_DIR}/gmp/lib:${LD_LIBRARY_PATH};
+  export LD_LIBRARY_PATH=${CACHE_DIR}/gmp/lib:${LD_LIBRARY_PATH};
   cabal update;
   cabal install cabal cabal-install;
   popd;
@@ -33,6 +32,4 @@ else
   pushd ${BUILD_DIR};
   cabal install;
   popd;
-
-  unset LIBRARY_PATH LD_LIBRARY_PATH;
 fi;
