@@ -19,7 +19,9 @@ if [ -z ${BUILDPACK_GHC_BASE_URL} ]; then
 else
   mkdir -p ${CACHE_DIR};
   pushd ${CACHE_DIR};
-  curl -O ${BUILDPACK_GHC_BASE_URL}/${GHC_VERSION}/ghc-heroku-${GHC_VERSION}.tar.bz2;
+  URL=${BUILDPACK_GHC_BASE_URL}/ghc-heroku-${GHC_VERSION}.tar.bz2;
+  echo "Info: Downloading ${URL}"
+  curl -O ${URL};
   tar jxvf ghc-heroku-${GHC_VERSION}.tar.bz2;
   cabal update;
   cabal install cabal cabal-install;
