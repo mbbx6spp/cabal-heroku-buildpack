@@ -29,6 +29,7 @@ else
   popd;
 
   pushd ${BUILD_DIR};
+  echo "GHC version: " + $(ghc --numeric-version)
   cabal install;
   popd;
 fi;
