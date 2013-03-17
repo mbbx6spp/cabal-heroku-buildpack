@@ -10,6 +10,25 @@ echo "Info: BUILD_DIR=$BUILD_DIR"
 CACHE_DIR=$2
 echo "Info: CACHE_DIR=$CACHE_DIR"
 
+mkdir -p ${CACHE_DIR};
+pushd ${CACHE_DIR};
+
+if [ -z $GMP_VERSION ]; then
+  echo "Error: please set GMP_VERSION in environment";
+  exit 1;
+else
+  echo "Info: GMP_VERSION=${GMP_VERSION}"
+  URL=${BUILDPACK_GMP_BASE_URL}/gmp-${GMP_VERSION}/gmp-${GMP_VERSION}.tar.bz2;
+  echo "Info: Downloading ${URL}"
+  curl -O ${URL};
+  tar jxf gmp-${GMP_VERSION}.tar.bz2;
+  pushd gmp-${GMP_VERSION};
+  ./configure --prefix=${BUILD_DIR}
+  make && make check;
+  make install;
+  popd;
+fi;
+
 [ -z $GHC_VERSION ] && echo "Error: please set GHC_VERSION in environment" && exit 1
 
 ## CHECK BUILDPACK_GHC_BASE_URL is set
@@ -17,17 +36,13 @@ if [ -z ${BUILDPACK_GHC_BASE_URL} ]; then
   echo "Error: please set BUILDPACK_GHC_BASE_URL";
   exit 1;
 else
-  mkdir -p ${CACHE_DIR};
-  pushd ${CACHE_DIR};
   URL=${BUILDPACK_GHC_BASE_URL}/${GHC_VERSION}/ghc-${GHC_VERSION}-x86_64-unknown-linux.tar.bz2;
   echo "Info: Downloading ${URL}"
   curl -O ${URL};
   tar jxf ghc-${GHC_VERSION}-x86_64-unknown-linux.tar.bz2;
   PATH=${CACHE_DIR}/ghc-${GHC_VERSION}/bin:$PATH;
   ln -s ${CACHE_DIR}/ghc-${GHC_VERSION} ${CACHE_DIR}/ghc;
-  export LD_LIBRARY_PATH=${CACHE_DIR}/gmp-5.0.5/lib:${LD_LIBRARY_PATH};
-  cabal update;
-  popd;
+  export LD_LIBRARY_PATH=${BUILD_DIR}/lib:${LD_LIBRARY_PATH};
 
   pushd ${BUILD_DIR};
   echo "GHC version: " + $(ghc --numeric-version)
