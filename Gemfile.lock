@@ -24,7 +24,7 @@ GEM
     json (1.6.5)
     mime-types (1.17.2)
     multipart-post (1.1.5)
-    rack (1.4.1)
+    rack (1.6.11)
     rdiscount (1.6.8)
     rest-client (1.6.7)
       mime-types (>= 1.16)
